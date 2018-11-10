@@ -1,0 +1,6 @@
+options(download.file.method = "libcurl")
+local({
+  r <- getOption("repos")
+  r["CRAN"] <- "https://cran.rstudio.com/"
+  options(repos=r)
+})
