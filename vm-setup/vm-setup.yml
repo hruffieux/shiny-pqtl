@@ -35,6 +35,9 @@
       apt:
         deb: https://download3.rstudio.org/ubuntu-14.04/x86_64/shiny-server-1.5.9.923-amd64.deb
 
+    - name: Modify the Shiny Server configuration
+      script: configure_shiny_server.sh
+
     - name: Clone the locus-pqtl repository from GitHub
       git:
         repo: https://github.com/hruffieux/shiny-pqtl
