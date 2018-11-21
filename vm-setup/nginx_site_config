@@ -1,0 +1,35 @@
+server {
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+
+    ssl_certificate /etc/pki/tls/certs/{{ domain }}.crt.pem;
+    ssl_certificate_key /etc/pki/tls/private/{{ domain }}.key;
+
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name www.{{ domain }} {{ domain }};
+
+    location / {
+	    proxy_pass http://localhost:3838/LOCUS-pqtl-ottawa-diogenes/;
+	    proxy_redirect http://localhost:3838/ $scheme:$host/;
+    }
+}
+
+server {
+    if ($host = www.{{ domain }}) {
+        return 301 https://$host$request_uri;
+    }
+
+    if ($host = {{ domain }}) {
+        return 301 https://$host$request_uri;
+    }
+
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name www.{{ domain }} {{ domain }};
+    return 404;
+}
+
