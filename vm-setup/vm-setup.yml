@@ -63,8 +63,8 @@
 
     - name: Copy nginx configuration file for locus-pqtl
       template:
-        src: locus-pqtl.epfl.ch
-        dest: /etc/nginx/sites-enabled/locus-pqtl.epfl.ch
+        src: nginx_site_config
+        dest: /etc/nginx/sites-enabled/{{ domain }}
 
     - name: Enable and start the nginx server
       systemd: name=nginx enabled=yes state=restarted
