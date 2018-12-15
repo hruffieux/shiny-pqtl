@@ -40,3 +40,7 @@ rsconnect/
 
 # exclude version without Bonferroni correction
 assets/Suppl_tables_no_bonf.xlsx
+
+# Ansible retry files
+*.retry
+

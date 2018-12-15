@@ -1,0 +1,73 @@
+---
+- name: Set up a host to serve the locus-pqtl Shiny App
+  hosts: locus-pqtl
+  remote_user: '{{ user }}'
+  become: yes
+  tags: locus-pqtl
+  tasks:
+    - name: Add apt key for the Cran repos
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: E298A3A825C0D65DFD57CBB651716619E084DAB9
+
+    - name: Add the APT repository for R
+      apt_repository:
+        repo: deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/
+        state: present
+
+    - name: Install nginx
+      apt:
+        name: python,nginx,r-base
+        state: present
+        update_cache: yes
+
+    - name: Copy Rprofile file
+      copy:
+        src: Rprofile
+        dest: /root/.Rprofile
+
+    - name: Install Shiny
+      command: R -e "install.packages('shiny')"
+      args:
+        creates: /usr/local/lib/R/site-library/shiny
+
+    - name: Install Shiny Server
+      apt:
+        deb: https://download3.rstudio.org/ubuntu-14.04/x86_64/shiny-server-1.5.9.923-amd64.deb
+
+    - name: Modify the Shiny Server configuration
+      script: configure_shiny_server.sh
+
+    - name: Clone the locus-pqtl repository from GitHub
+      git:
+        repo: https://github.com/hruffieux/shiny-pqtl
+        dest: /home/{{ user }}/shiny-pqtl
+
+    - name: Install the shiny application into the Shiny Server root
+      command: rsync -avz /home/{{ user }}/shiny-pqtl/ /srv/shiny-server/
+
+    - name: Install shinythemes
+      command: R -e "install.packages('shinythemes')"
+      args:
+        creates: /usr/local/lib/R/site-library/shinythemes
+
+    - name: Install DT
+      command: R -e "install.packages('DT')"
+      args:
+        creates: /usr/local/lib/R/site-library/DT
+
+    - name: Remove default site configuration for nginx
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Copy nginx configuration file for locus-pqtl
+      template:
+        src: nginx_site_config
+        dest: /etc/nginx/sites-enabled/{{ domain }}
+
+    - name: Enable and start the nginx server
+      systemd: name=nginx enabled=yes state=restarted
+
+    - name: Enable and start the Shiny Server service
+      systemd: name=shiny-server enabled=yes state=restarted
