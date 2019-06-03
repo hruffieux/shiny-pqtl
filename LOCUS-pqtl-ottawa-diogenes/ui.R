@@ -5,7 +5,7 @@ percent_display <- 90
 load("../assets/ST.RData")
 
 ui <- fluidPage(theme = shinytheme("paper"),
-                title = "Supplementary Tables",
+                title = "LOCUS two-stage pQTL analysis database",
                 sidebarLayout(
                   do.call(sidebarPanel, c(lapply(1:n_st, function(i) 
                     conditionalPanel(
