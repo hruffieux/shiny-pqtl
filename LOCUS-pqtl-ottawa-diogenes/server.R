@@ -37,4 +37,7 @@ server <- function(input, output) {
   output$mytable8 <- DT::renderDataTable({
     DT::datatable(st[[8]][, input$show_vars8, drop = FALSE])
   })
+  output$mytable9 <- DT::renderDataTable({
+    DT::datatable(st[[9]][, input$show_vars9, drop = FALSE])
+  })
 }

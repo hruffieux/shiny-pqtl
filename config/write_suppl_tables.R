@@ -6,8 +6,15 @@ load("../assets/ST.RData")
 require(xlsx) 
 
 
-list_trans <- list(3, 8:9, c(7:12, 14:15, 18:20, 22:23), 11, NULL, 4:5, 7:10, 
-                   c(1, 5:6, 14:15))
+list_trans <- list(3, 
+                   8:9, 
+                   c(7:12, 14:15, 18:20, 22:23), 
+                   11, 
+                   c(1, 5:6, 13:14),
+                   c(1, 5:6, 14:16),
+                   NULL,
+                   4:5, 
+                   7:10)
 
 vec_names <- gsub(" - ", "-", vec_names)
 
