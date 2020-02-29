@@ -2,7 +2,7 @@ require(shiny)
 
 server <- function(input, output) {
   
-  load("../assets/ST.RData")
+  load("../assets/ST_db.RData")
   
   # doesn't work don't know why.
   # for(i in 1:n_st) {

@@ -1,7 +1,7 @@
 rm(list = ls())
 setwd("~/Dropbox/PhD_private/Papers/Paper_3/shiny_pqtl/config/")
 
-load("../assets/ST.RData")
+load("../assets/ST_db.RData")
 
 require(xlsx) 
 

@@ -1,2 +1,2 @@
 install.packages("shinythemes")
-install.packgaes("DT")
+install.packages("DT")
