@@ -12,11 +12,11 @@ server {
     server_name www.{{ domain }} {{ domain }};
 
     location /db/ {
-            proxy_pass http://localhost:3838/LOCUS-pqtl-ottawa-diogenes-db/;
+        proxy_pass http://localhost:3838/LOCUS-pqtl-ottawa-diogenes-db/;
     }
 
     location / {
-	    proxy_pass http://localhost:3838/LOCUS-pqtl-ottawa-diogenes/;
+	    proxy_pass http://localhost:3838/LOCUS-pqtl-ottawa-diogenes-db/;
 	    proxy_redirect http://localhost:3838/ $scheme:$host/;
     }
 }

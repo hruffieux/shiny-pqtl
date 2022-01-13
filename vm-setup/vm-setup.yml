@@ -43,14 +43,8 @@
         repo: https://github.com/hruffieux/shiny-pqtl
         dest: /home/{{ user }}/shiny-pqtl
 
-    - name: Make a second clone of the locus-pqtl repository with the devel branch checked out
-      git:
-        repo: https://github.com/hruffieux/shiny-pqtl
-        dest: /home/{{ user }}/shiny-pqtl-devel
-        version: devel
-
     - name: Install the shiny-pqtl applications into the Shiny Server root
-      command: rsync -avz /home/{{ user }}/shiny-pqtl/ /home/{{ user }}/shiny-pqtl-devel/ /srv/shiny-server/
+      command: rsync -avz /home/{{ user }}/shiny-pqtl/ /srv/shiny-server/
 
     - name: Install shinythemes
       command: R -e "install.packages('shinythemes')"
