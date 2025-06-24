@@ -2,7 +2,7 @@ require(shiny)
 require(shinythemes)
 
 percent_display <- 90
-load("../assets/ST_db.RData")
+load("assets/ST_db.RData")
 
 ui <- fluidPage(theme = shinytheme("paper"),
                 title = "LOCUS two-stage pQTL analysis database",
